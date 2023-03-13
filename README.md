@@ -4,7 +4,7 @@ The workshop will demonstrate how you can validate your network configuration wi
 
 ## Start the workshop:
 
-Visit the site to get started: [https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/blob/master/docs/README.md](https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/blob/master/docs/README.md)
+Visit the site to get started: [https://github.com/greyestapps/amazon-inspector-network-reachability-workshop/blob/master/README.md](https://github.com/greyestapps/amazon-inspector-network-reachability-workshop/blob/master/README.md)
 
 ## License
 
