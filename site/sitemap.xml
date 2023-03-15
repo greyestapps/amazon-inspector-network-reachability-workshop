@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/01-environment-setup/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/01-environment-setup/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/02-running-inspector/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/02-running-inspector/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/03-evaluate-findings/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/03-evaluate-findings/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/04-integration-and-remediation/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/04-integration-and-remediation/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/05-cleanup/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/05-cleanup/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/presentation-notes/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/contribute/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/contribute/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/license/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/license/</loc>
-     <lastmod>2019-08-07</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/presentation-notes/</loc>
+         <lastmod>2023-03-15</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>

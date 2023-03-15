@@ -1187,7 +1187,7 @@
 					" return response"
 				]]}
 			},
-			"Runtime": "python2.7",
+			"Runtime": "python3.9",
 			"Timeout": "35"
 		}
 	},

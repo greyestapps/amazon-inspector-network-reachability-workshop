@@ -1,7 +1,7 @@
 Module 1: Environment Build and Configuration
 =============================================
 
-In this first module you will build the environment using a CloudFormation template. As a reminder, make sure you are in a region supported by Amazon Inspector (<https://docs.aws.amazon.com/inspector/latest/userguide/inspector_supported_os_regions.html>); we recommended the *us-east-1* region. You must also have an Amazon EC2 Key Pair in the region. If you do not, you must [create an EC2 Key Pair](<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>) for the instances to use.
+In this first module you will build the environment using a CloudFormation template. As a reminder, make sure you are in the *eu-west-1* region. You must also have an Amazon EC2 Key Pair in the region. If you do not, you must [create an EC2 Key Pair](<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>) for the instances to use.
 
 The CloudFormation template takes about 10 minutes to deploy in total; 5 minutes to deploy the infrastructure and an additional 5 minutes for listeners to become active on the instances.
 
@@ -10,24 +10,27 @@ Deploy the CloudFormation template
 
 Running the CloudFormation script is easy. There are specific outputs at the end of the process to help you test and validate the instances are up and keep track of instances while looking at the Inspector Report.
 
-Before you deploy the CloudFormation template feel free to view it [here](./assets/EnvironmentBuild.json). To deploy the CloudFormation template in the *us-east-1* region and complete steps 1-4 below you can click the following button.
-
-**US East 1 (N. Virginia)** &nbsp; &nbsp; &nbsp; &nbsp;
-<a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=network-reachability-workshop&templateURL=https://sa-security-specialist-workshops-us-east-1.s3.amazonaws.com/network-reachability-workshop/EnvironmentBuild.json&param_AvailabilityZone1=us-east-1a&param_AvailabilityZone2=us-east-1d&param_LatestLinuxAmiId=/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
+Before you deploy the CloudFormation template feel free to view it [here](./assets/EnvironmentBuild.json). To deploy the CloudFormation template in the *eu-west-1* region and complete steps 1-4 below you can click the following button.
 
 ---
 
-If you choose to use a region different than *us-east-1*, start with step 1.
+<!-- If you choose to use a region different than *us-east-1*, start with step 1. -->
 
-1.  Make sure you are in a region that supports Amazon Inspector (<https://docs.aws.amazon.com/inspector/latest/userguide/inspector_supported_os_regions.html>)
+1.  Make sure you are signed in into your AWS account and you are in the eu-west-1 region
 
-2.  Go to the AWS CloudFormation console
+2.  Go to the AWS CloudFormation console by clicking the button below **EU West 1 (Ireland)** &nbsp; &nbsp; &nbsp; &nbsp;
+<a href="https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/create/review?stackName=network-reachability-workshop&templateURL=https://networking-workshop-inspector.s3.eu-central-1.amazonaws.com/assets/EnvironmentBuild.json&param_AvailabilityZone1=eu-west-1a&param_AvailabilityZone2=eu-west-1b&param_LatestLinuxAmiId=/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2" target="_blank">![Deploy in eu-west-1](./images/deploy-to-aws.png)</a>
+
+3. Check the parameters section and select the KeyPair you created before under _PassedKeyName_
+
+8. Acknowledge the CloudFormation Template creates a user by checking the box.
+	![](./images/mod1-2-acknowledge.png)
 
 3.  Click “Create Stack”
 
-    1.  Select “Upload a Template File” and add the JSON file provided [here](./assets/EnvironmentBuild.json).
+    <!-- 1.  Select “Upload a Template File” and add the JSON file provided [here](./assets/EnvironmentBuild.json). -->
 
-4.  Click Next
+<!-- 4.  Click Next
 
 5.  Fill out the screen as follows:
 
@@ -59,8 +62,8 @@ If you choose to use a region different than *us-east-1*, start with step 1.
 
     1.  **People miss this step all the time**
 
-	![](./images/mod1-2-acknowledge.png)
+	![](./images/mod1-2-acknowledge.png) -->
 
-9.  Click “Create Stack”
+<!-- 9.  Click “Create Stack” -->
 
-CloudFormation will now build the stack.  Wait until the status changes to “CREATE_COMPLETED.” While CloudFormation is building the stack, feel free to review the [presentation materials](presentation-notes.md). After the stack build is finished, proceed to the next phase, [Running the Inspector Report](02-running-inspector.md).
+CloudFormation will now build the stack.  Wait until the status changes to _CREATE_COMPLETED_. While CloudFormation is building the stack, feel free to review the [presentation materials](presentation-notes.md). After the stack build is finished, proceed to the next phase, [Running the Inspector Report](02-running-inspector.md).

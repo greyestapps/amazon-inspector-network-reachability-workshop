@@ -18,26 +18,27 @@ Prerequisites
 
 1.	You will need an AWS account for this workshop and administrative credentials.
 2.	You should be familiar with AWS core services such as Amazon EC2, Amazon VPC, and AWS CloudFormation. You should also be comfortable using the AWS console.
-3.	The instructions are written with the understanding that the account is new or clean. We strongly recommend that you do not do these workshops in work or "production" accounts.
-4.	You will incur charges for the AWS resources used in this workshop.   The charges for some of the resources may be covered through the [AWS Free Tier](https://aws.amazon.com/free/).  The demo uses free tier choices wherever possible.
-5.	If you are using an existing account with resources already deployed in a region, be aware of the soft limit of five VPCs per region.
-6.	You must run this workshop in a region supported by Amazon Inspector (<https://docs.aws.amazon.com/inspector/latest/userguide/inspector_supported_os_regions.html>). We recommended using the *us-east-1* region.
-7.	You must have an [EC2 key pair] (<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>) in the region you have selected.
+3.	Run this workshop in the *eu-west-1* region.
+4.	You must have an [EC2 key pair](<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>) in the region *eu-west-1*. Create one in the [AWS management console](https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#KeyPairs:) and download it to your computer.
+<!-- 3.	The instructions are written with the understanding that the account is new or clean. We strongly recommend that you do not do these workshops in work or "production" accounts. -->
+<!-- 4.	You will incur charges for the AWS resources used in this workshop.   The charges for some of the resources may be covered through the [AWS Free Tier](https://aws.amazon.com/free/).  The demo uses free tier choices wherever possible. -->
+<!-- 5.	If you are using an existing account with resources already deployed in a region, be aware of the soft limit of five VPCs per region. -->
+
 
 Workshop Scenario
 =================
 
 Example Corp. has been in AWS for a few months and is moving its first few workloads into AWS. The first workload to move was an external website with a database back end. Example Corp.’s security team insisted administrative access to servers must be through a set of bastion hosts in a separate VPC. Recently, a developer has created a public proof of concept for a new highly available web service and connected it to the environment without going through all the proper change management. The various IT stakeholders have been working off the following untested assumptions:
 
-Assumption 1.\> Instances in private subnets are not accessible from the internet
+__Assumption 1.__ Instances in private subnets are not accessible from the internet
 
-Assumption 2.\> Putting servers in different Availability zones provides both failover and better reliability
+__Assumption 2.__ Putting servers in different Availability zones provides both failover and better reliability
 
-Assumption 3.\> Nothing can route through the bastion VPC
+__Assumption 3.__ Nothing can route through the bastion VPC
 
-Assumption 4.\> Access to the servers is limited according to the principle of least privilege
+__Assumption 4.__ Access to the servers is limited according to the principle of least privilege
 
-Assumption 5.\> The bastion hosts can access all environments
+__Assumption 5.__ The bastion hosts can access all environments
 
 Example Corp's IT team found the new configuration not because of controls, but from the increase in their AWS bill. As a result, the security and operations teams want to validate the right security is applied to both the new and existing environments using the Inspector Network Reachability report.
 
@@ -65,17 +66,17 @@ Here are the Route Tables and Security Groups for you to review as well.
 
 ![](./images/readme-4-security-groups-2.png)
 
-Presentation Deck
+<!-- Presentation Deck
 =================
 
 Feel free to download the [workshop presentation](./assets/demo-support-presentation.pdf). You may find this helpful when doing the workshop yourself or in support of a group learning activity.
 
-This site will note where the presentation material may be most useful.
+This site will note where the presentation material may be most useful. -->
 
 Region
 ======
 
-Make sure you are in a region supported by Amazon Inspector (<https://docs.aws.amazon.com/inspector/latest/userguide/inspector_supported_os_regions.html>). We recommend using the *us-east-1* region.
+Please use the *eu-west-1* region.
 
 Modules
 =======
