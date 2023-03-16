@@ -66,4 +66,6 @@ Before you deploy the CloudFormation template feel free to view it [here](./asse
 
 <!-- 9.  Click “Create Stack” -->
 
-CloudFormation will now build the stack.  Wait until the status changes to _CREATE_COMPLETED_. While CloudFormation is building the stack, feel free to review the [presentation materials](presentation-notes.md). After the stack build is finished, proceed to the next phase, [Running the Inspector Report](02-running-inspector.md).
+CloudFormation will now build the stack.  Wait until the status changes to _CREATE_COMPLETED_. 
+<!-- While CloudFormation is building the stack, feel free to review the [presentation materials](presentation-notes.md).  -->
+After the stack build is finished, proceed to the next phase, [Running the Inspector Report](02-running-inspector.md).

@@ -1,9 +1,9 @@
-Module 2 - Running the Inspector Report
+Module 2 - Running Inspector
 =======================================
 
-In the previous module you created the workshop's environment including EC2 instances running various applications. In this module you will gather the information from the CloudFormation Stack and use it to validate those services are running and run an Inspector Network Reachability report.
+In the previous module you created the workshop's environment including EC2 instances running various applications. In this module you will gather the information from the CloudFormation Stack and use it to validate those services are running, run Inspector and detect Network Reachability findings.
 
-Running the Inspector Report
+Running Inspector
 ============================
 
 1.  Refresh the CloudFormation interface until the Status shows “Create Complete”

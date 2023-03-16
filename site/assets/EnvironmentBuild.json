@@ -685,7 +685,17 @@
 							"ssmmessages:CreateControlChannel",
 							"ssmmessages:CreateDataChannel",
 							"ssmmessages:OpenControlChannel",
-							"ssmmessages:OpenDataChannel"
+							"ssmmessages:OpenDataChannel",
+							"ssm:DescribeAssociation",
+							"ssm:ListAssociations",
+							"ssm:ListInstanceAssociations",
+							"ssm:PutInventory",
+							"ssm:PutComplianceItems",
+							"ssm:UpdateAssociationStatus",
+							"ssm:UpdateInstanceAssociationStatus",
+							"ssm:UpdateInstanceInformation",
+							"ssm:GetDocument",
+							"ssm:DescribeDocument"
 						],
 						"Resource": "*"
 					},

@@ -3,11 +3,11 @@
 site_name: Finding and addressing Network Misconfigurations on AWS
 site_description: 'The workshop will demonstrate how you can validate their network configuration without needing to have a deep networking background by using Inspectors Network Reachability report. You will learn how this report can help them find misconfigurations in the architecture or behaviors they might not have expected. The demo will finish with using the Network Reachability report findings integrated with other Security Services to remediate these issues.'
 site_author: 'aws-security-workshops@amazon.com'
-site_url: 'https://github.com/aws-samples/amazon-inspector-network-reachability-workshop'
+# site_url: 'https://github.com/aws-samples/amazon-inspector-network-reachability-workshop'
 
 # Repository
-repo_name: 'amazon-inspector-network-reachability-workshop'
-repo_url: 'https://github.com/aws-samples/amazon-inspector-network-reachability-workshop'
+# repo_name: 'amazon-inspector-network-reachability-workshop'
+# repo_url: 'https://github.com/aws-samples/amazon-inspector-network-reachability-workshop'
 
 # Copyright
 copyright: '<a href="https://aws.amazon.com/privacy/" target="_blank">Privacy</a> | <a href="https://aws.amazon.com/terms/" target="_blank">Site terms</a> | &copy; 2023, Amazon Web Services, Inc. or its affiliates. All rights reserved.'
@@ -42,10 +42,10 @@ markdown_extensions:
 nav:
   - Overview: 'README.md'
   - 'Module 1: Environment Build and Configuration': '01-environment-setup.md'
-  - 'Module 2: Running the Inspector Report': '02-running-inspector.md'
+  - 'Module 2: Running Inspector': '02-running-inspector.md'
   - 'Module 3: Evaluating Findings': '03-evaluate-findings.md'
   - 'Module 4: Integration and Remediation': '04-integration-and-remediation.md'
   - 'Module 5: Cleanup': '05-cleanup.md'
-  - 'Presentation Notes': 'presentation-notes.md'
+  # - 'Presentation Notes': 'presentation-notes.md'
   - Contributing: 'contribute.md'
   - License: 'license.md'

@@ -12,8 +12,6 @@
         <meta name="author" content="aws-security-workshops@amazon.com">
       
       
-        <link rel="canonical" href="https://github.com/aws-samples/amazon-inspector-network-reachability-workshop/02-running-inspector/">
-      
       
         <link rel="prev" href="../01-environment-setup/">
       
@@ -25,7 +23,7 @@
     
     
       
-        <title>Module 2: Running the Inspector Report - Finding and addressing Network Misconfigurations on AWS</title>
+        <title>Module 2: Running Inspector - Finding and addressing Network Misconfigurations on AWS</title>
       
     
     
@@ -75,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#module-2-running-the-inspector-report" class="md-skip">
+        <a href="#module-2-running-inspector" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Module 2: Running the Inspector Report
+              Module 2: Running Inspector
             
           </span>
         </div>
@@ -152,18 +150,6 @@
 </div>
     
     
-      <div class="md-header__source">
-        <a href="https://github.com/aws-samples/amazon-inspector-network-reachability-workshop" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    amazon-inspector-network-reachability-workshop
-  </div>
-</a>
-      </div>
-    
   </nav>
   
 </header>
@@ -195,18 +181,6 @@
     </a>
     Finding and addressing Network Misconfigurations on AWS
   </label>
-  
-    <div class="md-nav__source">
-      <a href="https://github.com/aws-samples/amazon-inspector-network-reachability-workshop" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    amazon-inspector-network-reachability-workshop
-  </div>
-</a>
-    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -258,7 +232,7 @@
       
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Module 2: Running the Inspector Report
+        Module 2: Running Inspector
       </a>
       
     </li>
@@ -305,21 +279,6 @@
     <li class="md-nav__item">
       <a href="../05-cleanup/" class="md-nav__link">
         Module 5: Cleanup
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../presentation-notes/" class="md-nav__link">
-        Presentation Notes
       </a>
     </li>
   
@@ -387,13 +346,10 @@
                 
                   
 
-  
-  
 
-
-<h1 id="module-2-running-the-inspector-report">Module 2 - Running the Inspector Report</h1>
-<p>In the previous module you created the workshop's environment including EC2 instances running various applications. In this module you will gather the information from the CloudFormation Stack and use it to validate those services are running and run an Inspector Network Reachability report.</p>
-<h1 id="running-the-inspector-report">Running the Inspector Report</h1>
+<h1 id="module-2-running-inspector">Module 2 - Running Inspector</h1>
+<p>In the previous module you created the workshop's environment including EC2 instances running various applications. In this module you will gather the information from the CloudFormation Stack and use it to validate those services are running, run Inspector and detect Network Reachability findings.</p>
+<h1 id="running-inspector">Running Inspector</h1>
 <ol>
 <li>
 <p>Refresh the CloudFormation interface until the Status shows “Create Complete”</p>
@@ -535,7 +491,7 @@
 <p>Click Save</p>
 </li>
 </ol>
-<p>You have successfully configured Inspector and started an assessment. This assessment can take up to 15 minutes, so now’s a good time for you to review the architecture. The <a href="../assets/demo-support-presentation.pdf">Presentation</a> includes the architecture diagram, the route tables, and the security groups. The <a href="../presentation-notes/">Presentation Notes</a> page then walks through the architecture with some probing questions.</p>
+<p>You have successfully configured Inspector and started an assessment. This assessment can take up to 15 minutes, so now’s a good time for you to review the architecture. The <a href="../assets/demo-support-presentation.pdf">Presentation</a> includes the architecture diagram, the route tables, and the security groups. The <a href="presentation-notes.md">Presentation Notes</a> page then walks through the architecture with some probing questions.</p>
 <p>You can also choose to skip to <a href="../03-evaluate-findings/">Evaluating Findings</a> once the report is complete.</p>
 
 
