@@ -349,6 +349,7 @@
 
 <h1 id="module-2-running-inspector">Module 2 - Running Inspector</h1>
 <p>In the previous module you created the workshop's environment including EC2 instances running various applications. In this module you will gather the information from the CloudFormation Stack and use it to validate those services are running, run Inspector and detect Network Reachability findings.</p>
+<p>Amazon Inspector continually scans AWS workloads for software vulnerabilities and unintended network exposure. By end of 2021 Amazon Inspector has been completely rearchitected to automate vulnerability management and deliver near real-time findings to minimize the time to discover new vulnerabilities. </p>
 <h1 id="running-inspector">Running Inspector</h1>
 <ol>
 <li>
@@ -382,117 +383,16 @@
 </li>
 <li>
 <p>Go to the Inspector console.</p>
-<p>Next you will create the Amazon Inspector Targets and Templates. This workshop makes you do this manually to get a feel for how it works, but this can be automated.</p>
-<p>First, you create the Assessment Target to include all instances, even those without the agent.</p>
+<p>Next click on <em>Get Started</em> to activate Amazon Inspector for your account. Then click on <em>Activate Inspector</em>.</p>
 <p><img alt="" src="../images/mod2-4-inspector.png" /></p>
-<div class="admonition info">
-<p class="admonition-title">If you have not used Inspector in this region before</p>
-<p>You will get a different set of screens. Start by clicking a.) “Getting Started” on the Inspector page, and then b.) “Advanced Setup” on the bottom right to get to the Assessment Target screen – Step 10</p>
-</div>
+<p>Activating Inspector will automatically trigger the first scan of your environment which can take a couple of minutes.</p>
 </li>
 <li>
-<p>Click on Assessment Targets. Your window should be similar to the image below.</p>
-<p><img alt="" src="../images/mod2-5-targets.png" /></p>
-</li>
-<li>
-<p>Click “Create”</p>
-</li>
-<li>
-<p>Fill out the screen as follows:</p>
-<ol>
-<li>
-<p>Name: {Whatever name you will remember}</p>
-</li>
-<li>
-<p>All Instances: Uncheck the box</p>
-</li>
-<li>
-<p>Use Tags</p>
-<ol>
-<li>
-<p>Key: NetworkReachabilityDemo</p>
-</li>
-<li>
-<p>Value: True</p>
+<p>You can check the Dashboard for the environment coverage. Wait until your instances are covered at 75%.</p>
 </li>
 </ol>
-</li>
-<li>
-<p>Install Agents: Uncheck the box</p>
-</li>
-</ol>
-<p><img alt="" src="../images/mod2-6-targets-2.png" /></p>
-<div class="admonition info">
-<p class="admonition-title">Service Linked Role</p>
-<p>Inspector may prompt you for permission to create a Service Linked role to give the Inspector service permission to do work on your behalf.  Click OK.</p>
-</div>
-</li>
-<li>
-<p>Click “Save”</p>
-<div class="admonition info">
-<p class="admonition-title">If you have not used Inspector in this region before</p>
-</div>
-<p>You should click "Next" to get to the Assessment Template screen – Step 14</p>
-</li>
-<li>
-<p>Click on Assessment Templates</p>
-</li>
-<li>
-<p>Click on “Create”</p>
-<p><img alt="" src="../images/mod2-7-templates.png" /></p>
-</li>
-<li>
-<p>Fill out the screen as follows:</p>
-<ol>
-<li>
-<p>Name: {Whatever name you will remember}</p>
-</li>
-<li>
-<p>Target Name: {The Assessment Target you just created} - This is only required if you have already used Inspector in this region before. Otherwise this is enabled by default.</p>
-</li>
-<li>
-<p>Rules packages: Select ONLY “Network Reachability-1.1”</p>
-</li>
-<li>
-<p>Duration: “15 minutes”</p>
-</li>
-<li>
-<p>Assessment Schedule: Uncheck the box</p>
-</li>
-</ol>
-</li>
-<li>
-<p>Click the button labelled “Create” or “Create and run”</p>
-</li>
-<li>
-<p>Click on Assessment Runs and then the refresh icon. Your window should be similar to the image below.</p>
-<p><img alt="" src="../images/mod2-8-runs.png" /></p>
-</li>
-<li>
-<p>The status should say “Analyzing” or “Collecting data”</p>
-<p>You are now going to publish the report to an SNS topic so you can take action. An SNS topic has been created for you in the CloudFormation Template.</p>
-</li>
-<li>
-<p>Click on Assessment templates</p>
-</li>
-<li>
-<p>Click on the right arrow next to the Assessment your created to expand the options.</p>
-</li>
-<li>
-<p>Click on box under "SNS topics"</p>
-</li>
-<li>
-<p>Click the drop down and select the Topic named {Accountnumber}:InspectorAutomation</p>
-</li>
-<li>
-<p>Deselect all of the events EXCEPT "Findings Reported".</p>
-</li>
-<li>
-<p>Click Save</p>
-</li>
-</ol>
-<p>You have successfully configured Inspector and started an assessment. This assessment can take up to 15 minutes, so now’s a good time for you to review the architecture. The <a href="../assets/demo-support-presentation.pdf">Presentation</a> includes the architecture diagram, the route tables, and the security groups. The <a href="presentation-notes.md">Presentation Notes</a> page then walks through the architecture with some probing questions.</p>
-<p>You can also choose to skip to <a href="../03-evaluate-findings/">Evaluating Findings</a> once the report is complete.</p>
+<p><strong>Do you have an idea why the we only have 75% of coverage for EC2 instances?</strong></p>
+<p>Next let us evaluate the <a href="../03-evaluate-findings/">Findings</a>.</p>
 
 
 

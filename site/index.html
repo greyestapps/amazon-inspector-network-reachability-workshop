@@ -376,9 +376,10 @@
 <p>Example Corp. has been in AWS for a few months and is moving its first few workloads into AWS. The first workload to move was an external website with a database back end. Example Corp.’s security team insisted administrative access to servers must be through a set of bastion hosts in a separate VPC. Recently, a developer has created a public proof of concept for a new highly available web service and connected it to the environment without going through all the proper change management. The various IT stakeholders have been working off the following untested assumptions:</p>
 <p><strong>Assumption 1.</strong> Instances in private subnets are not accessible from the internet</p>
 <p><strong>Assumption 2.</strong> Putting servers in different Availability zones provides both failover and better reliability</p>
-<p><strong>Assumption 3.</strong> Nothing can route through the bastion VPC</p>
-<p><strong>Assumption 4.</strong> Access to the servers is limited according to the principle of least privilege</p>
-<p><strong>Assumption 5.</strong> The bastion hosts can access all environments</p>
+<!-- __Assumption 3.__ Nothing can route through the bastion VPC -->
+
+<p><strong>Assumption 3.</strong> Access to the servers is limited according to the principle of least privilege</p>
+<p><strong>Assumption 4.</strong> The bastion hosts can access all environments</p>
 <p>Example Corp's IT team found the new configuration not because of controls, but from the increase in their AWS bill. As a result, the security and operations teams want to validate the right security is applied to both the new and existing environments using the Inspector Network Reachability report.</p>
 <h1 id="architecture">Architecture</h1>
 <p>You will use AWS CloudFormation to build the environment</p>
@@ -391,7 +392,7 @@
 </ul>
 <p>This environment is shown below.</p>
 <p><img alt="" src="images/readme-1-architecture.png" /></p>
-<p>Here are the Route Tables and Security Groups for you to review as well.</p>
+<p>Here are the Route Tables and Security Groups for you to review as well. Don't worry, we will also cover this with a short presentation in a bit.</p>
 <p><img alt="" src="images/readme-2-routes.png" /></p>
 <p><img alt="" src="images/readme-3-security-groups.png" /></p>
 <p><img alt="" src="images/readme-4-security-groups-2.png" /></p>
@@ -405,7 +406,7 @@ This site will note where the presentation material may be most useful. -->
 <h1 id="region">Region</h1>
 <p>Please use the <em>eu-west-1</em> region.</p>
 <h1 id="modules">Modules</h1>
-<p>The workshop is broken up into the five modules below:</p>
+<p>The workshop is broken up into the five modules below - please start with the <a href="01-environment-setup/">first module</a>:</p>
 <ol>
 <li><a href="01-environment-setup/">Environment Build and Configuration</a></li>
 <li><a href="02-running-inspector/">Running the Inspector Report</a></li>

@@ -66,6 +66,8 @@ Before you deploy the CloudFormation template feel free to view it [here](./asse
 
 <!-- 9.  Click “Create Stack” -->
 
-CloudFormation will now build the stack.  Wait until the status changes to _CREATE_COMPLETED_. 
+CloudFormation will now build the stack.  Wait until the status changes to _CREATE_COMPLETED_. You can click on _Events_ to get updates on which resources of the stack get created and what their status is. Just hit the refresh button inside the _Events_ view to get updates.
+![](./images/mod1-cf-events.png)
+
 <!-- While CloudFormation is building the stack, feel free to review the [presentation materials](presentation-notes.md).  -->
-After the stack build is finished, proceed to the next phase, [Running the Inspector Report](02-running-inspector.md).
+After the stack build is finished, proceed to the next phase, [Running Inspector](02-running-inspector.md).

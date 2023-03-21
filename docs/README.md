@@ -34,11 +34,11 @@ __Assumption 1.__ Instances in private subnets are not accessible from the inter
 
 __Assumption 2.__ Putting servers in different Availability zones provides both failover and better reliability
 
-__Assumption 3.__ Nothing can route through the bastion VPC
+<!-- __Assumption 3.__ Nothing can route through the bastion VPC -->
 
-__Assumption 4.__ Access to the servers is limited according to the principle of least privilege
+__Assumption 3.__ Access to the servers is limited according to the principle of least privilege
 
-__Assumption 5.__ The bastion hosts can access all environments
+__Assumption 4.__ The bastion hosts can access all environments
 
 Example Corp's IT team found the new configuration not because of controls, but from the increase in their AWS bill. As a result, the security and operations teams want to validate the right security is applied to both the new and existing environments using the Inspector Network Reachability report.
 
@@ -58,7 +58,7 @@ This environment is shown below.
 
 ![](./images/readme-1-architecture.png)
 
-Here are the Route Tables and Security Groups for you to review as well.
+Here are the Route Tables and Security Groups for you to review as well. Don't worry, we will also cover this with a short presentation in a bit.
 
 ![](./images/readme-2-routes.png)
 
@@ -81,7 +81,7 @@ Please use the *eu-west-1* region.
 Modules
 =======
 
-The workshop is broken up into the five modules below:
+The workshop is broken up into the five modules below - please start with the [first module](01-environment-setup.md):
 
 1.	[Environment Build and Configuration](01-environment-setup.md)
 2.	[Running the Inspector Report](02-running-inspector.md)

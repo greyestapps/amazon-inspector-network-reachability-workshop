@@ -348,50 +348,146 @@
 
 
 <h1 id="module-4-integration-and-remediation">Module 4 - Integration and Remediation</h1>
-<p>In the previous module you identified issues with the network configuration and began remediating them. In this module you will leverage additional AWS services to deploy automatic remediations to known bad configurations. </p>
+<!-- In the previous module you identified issues with the network configuration. It's good to have those identified, but we should also remediate them. In this module you will do a manual remediation but also leverage additional AWS services to deploy automatic remediations to known bad configurations.  -->
+
+<p>In the previous module you identified issues with the network configuration. It's good to have those identified, but we should also remediate them. In this module you will leverage additional AWS services to deploy automatic remediations to known bad configurations. </p>
 <h1 id="integrating-inspector-with-other-aws-security-services">Integrating Inspector with other AWS Security Services</h1>
-<p>In the previous module you configured your assessment to send findings to a Simple Notification Service topic. Now you are going to use that to trigger a Lambda function to remediate common findings. The CloudFormation template has deployed a Lambda function to block SSH access to misconfigured instances and included it in the CloudFormation template. Let's build the connection from SNS to Lambda and review the code.</p>
+<p>In order to implement automatic remediation for specific findings we need a trigger for new findings coming in. We will create a rule within Amazon EventBridge which is a service that provides real-time access to changes in data in AWS services, your own applications, and software as a service (SaaS) applications without writing code. Then you are going to use that to trigger a Lambda function to remediate one of the most critical findings we found. The CloudFormation template has deployed a Lambda function to block SSH access to misconfigured instances. Let's build the connection from EventBridge to Lambda and review the code.</p>
 <ol>
 <li>
-<p>Go to the Amazon Simple Notification Service console</p>
+<p>Go to the <a href="https://eu-west-1.console.aws.amazon.com/events/home?region=eu-west-1#/">Amazon EventBridge console</a></p>
 </li>
 <li>
-<p>Click on Topics on the left hand side</p>
-<p><img alt="" src="../images/mod4-1-sns-topics.png" /></p>
+<p>Click on <em>Rules</em> on the left hand side and then on the button named <em>Create rule</em></p>
 </li>
 <li>
-<p>Click on the Topic named "InspectorAutomation"</p>
-<p>In order to have the SNS topic send data to Lambda, you need to create a subscription. You should see the subscriptions window on the bottom and it should be empty.</p>
+<p>Name the rule <em>InspectorAutomation</em>. Leave everything else as default and click on <em>Next</em>.</p>
 </li>
 <li>
-<p>Click Create Subscription</p>
-<p><img alt="" src="../images/mod4-2-subscription.png" /></p>
+<p>Scroll down to <em>Sample Event</em>, go into the Dropdown and select <em>Inspector2 Finding</em>. Have a look at the sample event to understand the structure of such an event that EventBridge would send to our Lambda function when Inspector detects a new finding. We will parse this structure within our Lambda function.</p>
+<p><img alt="" src="../images/mod4-eb-sample.png" /></p>
 </li>
 <li>
-<p>The Topic ARN should be filled out, but if it's not click on it and select the topic.</p>
+<p>Scroll down to the <em>Event pattern</em> section. Here select <em>Inspector2</em> as <em>AWS service</em> and <em>Inspector2 Finding</em> as <em>Event type</em>.</p>
+<p><img alt="" src="../images/mod4-eb-pattern.png" /></p>
 </li>
 <li>
-<p>Click on the Protocol drop down and select AWS Lambda</p>
+<p>Click <em>Next</em>, then on <em>target</em> drop down select <em>Lambda function</em> and the <em>NetworkReachabilityDemo-remediation-nacl</em> function.</p>
 </li>
 <li>
-<p>You should now see another dropdown. Click on it and select the one Lambda function that's there.</p>
-<p><img alt="" src="../images/mod4-3-create-subscription.png" /></p>
-</li>
-<li>
-<p>Click Create Subscription</p>
-<p>We've now configured SNS to send any alerts it receives to our Lambda function. Our Lambda function is configured to only respond to specific findings in specific ways. If you're interested in reviewing the Lambda function you can go to the Lambda console. The relevant piece of code for this activity are shown below:</p>
-<p><img alt="" src="../images/mod4-13-lambda-code.png" /></p>
+<p>Click <em>Next</em> until your end up in the <em>Review and create</em> screen. Review the rule definition and finally click on <em>Create rule</em>.</p>
+<p>We've now configured EventBridge to send any findings it receives to our Lambda function. Our Lambda function is configured to only respond to specific findings in specific ways. If you're interested in reviewing the Lambda function you can go to the Lambda console. The relevant piece of code for this activity are shown below:</p>
+<p><img alt="" src="../images/mod4-lambda-code.png" /></p>
 <p>You can see here that the Lambda code adds a Network ACL line that blocks SSH from the internet to any instance that has SSH open to the internet.</p>
-<p>To trigger this you need to have Inspector submit a finding to SNS. Rather than wait 15 minutes for Inspector to finish an assessment though, you can simulate this action.</p>
+<p>To trigger this you need to have Inspector submit a finding to EventBridge. Rather than waiting for Inspector to finish an assessment though, you can simulate this action.</p>
 </li>
 <li>
-<p>While still in SNS click on Topics on the left hand side</p>
+<p>Go into the Lambda console and select the function <a href="https://eu-west-1.console.aws.amazon.com/lambda/home?region=eu-west-1#/functions/NetworkReachabilityDemo-remediation-nacl?tab=code"><em>NetworkReachabilityDemo-remediation-nacl</em></a>. Click on the tab named <em>Test</em>. Select <em>Create new event</em>. This allows us to define an event that we want to test our Lambda function against. We will leverage our knowledge about the structure of a finding that Inspector sends via EventBridge.</p>
 </li>
 <li>
-<p>Click on the Topic named "InspectorAutomation"</p>
+<p>Let us remediate the SSH finding (including future SSH findings) as this is a critical one. Provide an <em>Event name</em> and copy the following JSON into the <em>Event JSON</em> textbox.</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="s">&quot;version&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;c02b4335-53a3-ecf7-b4c8-0a9ffc19a8ec&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;detail-type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Inspector2 Finding&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;aws.inspector2&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;account&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;708704313893&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;2023-03-20T18:08:05Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;region&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;eu-west-1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;resources&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s">&quot;i-0cc555cfcdf60a48f&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s">&quot;detail&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s">&quot;awsAccountId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;708704313893&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;On the instance i-0cc555cfcdf60a48f, the port range 22-22 is reachable from the InternetGateway igw-0164390e83f9a0f6b from an attached ENI eni-07db2a50cfa018a03.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;findingArn&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;arn:aws:inspector2:eu-west-1:708704313893:finding/9abc5f3a76093eeb2ad420fdf9c011ab&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;firstObservedAt&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Mar 20, 2023, 6:08:05 PM&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;lastObservedAt&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Mar 20, 2023, 6:08:05 PM&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;networkReachabilityDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s">&quot;networkPath&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;steps&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;componentId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;igw-0164390e83f9a0f6b&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;componentType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS::EC2::InternetGateway&quot;</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;componentId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;INSERT YOUR ACL ID HERE&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;componentType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS::EC2::NetworkAcl&quot;</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;componentId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;sg-0f615897558ace817&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;componentType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS::EC2::SecurityGroup&quot;</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;componentId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;eni-07db2a50cfa018a03&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;componentType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS::EC2::NetworkInterface&quot;</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;componentId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;i-0cc555cfcdf60a48f&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;componentType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS::EC2::Instance&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="s">&quot;openPortRange&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;begin&quot;</span><span class="o">:</span><span class="w"> </span><span class="mh">22</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;end&quot;</span><span class="o">:</span><span class="w"> </span><span class="mh">22</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="s">&quot;protocol&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;TCP&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s">&quot;remediation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s">&quot;recommendation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;text&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;You can restrict access to your instance by modifying the Security Groups or ACLs in the network path.&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s">&quot;resources&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;details&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="s">&quot;awsEc2Instance&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;iamInstanceProfileArn&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;arn:aws:iam::708704313893:instance-profile/SharedServerConnectivityProfile&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;imageId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;ami-05247819264504af0&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;ipV4Addresses&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="s">&quot;34.245.90.167&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="s">&quot;10.0.2.148&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="s">&quot;ipV6Addresses&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">            </span><span class="s">&quot;keyName&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;grey&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;launchedAt&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Mar 20, 2023, 3:25:03 PM&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;platform&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AMAZON_LINUX_2&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;subnetId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;subnet-07d7d49356afcf27b&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;t2.micro&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;vpcId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;vpc-07462a62acd48e298&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;i-0cc555cfcdf60a48f&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;partition&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;aws&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;region&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;eu-west-1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;tags&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="s">&quot;NetworkReachabilityDemo&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;True&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s">&quot;aws:cloudformation:stack-name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;network-reachability-workshop&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s">&quot;aws:cloudformation:stack-id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;arn:aws:cloudformation:eu-west-1:708704313893:stack/network-reachability-workshop/fe6c0e20-c732-11ed-8a8d-064a414836bb&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s">&quot;aws:cloudformation:logical-id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;DbServerAZ1&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s">&quot;Name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Database Server for AZ1&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;AWS_EC2_INSTANCE&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="s">&quot;severity&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;MEDIUM&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;ACTIVE&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Port 22 is reachable from an Internet Gateway - TCP&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;NETWORK_REACHABILITY&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;updatedAt&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Mar 20, 2023, 6:08:05 PM&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ol>
+<li>
+<p>The code snippet above contains a section with <em>INSERT YOUR ACL ID HERE</em>. You need to replace this placeholder with the ID of the Network Access Control List that the SSH finding correlates to.</p>
 </li>
 <li>
-<p>In the top right click on the button that says "Publish Message"</p>
+<p>Go back into Inspector</p>
 <p><img alt="" src="../images/mod4-4-publish.png" /></p>
 <p>Using the ARN you copied down in Step 3 of Module 3 you are going to publish a fake SNS message using the appropriate ARN to kick off the Lambda function.</p>
 <div class="admonition info">
