@@ -11,7 +11,7 @@ In this workshop you will learn how to use the Amazon Inspector Network Reachabi
 
 -	*[CSF Functions](https://www.nist.gov/cyberframework/online-learning/components-framework)*: Detect, Respond
 
--	*[CAF Components](https://d0.awsstatic.com/whitepapers/AWS_CAF_Security_Perspective.pdf)*: Detective, Responsive
+-	*[CAF Components](https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/foundations.html)*: Detective, Responsive
 
 Prerequisites
 =============
@@ -84,7 +84,7 @@ Modules
 The workshop is broken up into the five modules below - please start with the [first module](01-environment-setup.md):
 
 1.	[Environment Build and Configuration](01-environment-setup.md)
-2.	[Running the Inspector Report](02-running-inspector.md)
+2.	[Running Inspector](02-running-inspector.md)
 3.	[Evaluating Findings](03-evaluate-findings.md)
 4.	[Integration and Remediation](04-integration-and-remediation.md)
 5.	[Cleanup](05-cleanup.md)

@@ -136,73 +136,48 @@ In order to implement automatic remediation for specific findings we need a trig
 }
 ```
 
-11.	The code snippet above contains a section with _INSERT YOUR ACL ID HERE_. You need to replace this placeholder with the ID of the Network Access Control List that the SSH finding correlates to.
+11.	The code snippet above contains a section with _INSERT YOUR ACL ID HERE_ in line 26. You need to replace this placeholder with the ID of the Network Access Control List that the SSH finding correlates to.
 
-12. Go back into Inspector
+12. Go back into Inspector into the [Findings view](https://eu-west-1.console.aws.amazon.com/inspector/v2/home?region=eu-west-1#/findings). Select the finding with port 22. Then on the detail view go into section _Open Network Paths_, click on _Network Acl_ and copy the ACL id.
 
-	![](./images/mod4-4-publish.png)
+	![](./images/mod4-insp-22-acl.png)
 
-	Using the ARN you copied down in Step 3 of Module 3 you are going to publish a fake SNS message using the appropriate ARN to kick off the Lambda function.
+12.	Paste the id into the appropriate place in the test event in the Lambda console: replace the "**INSERT YOUR ACL ID HERE**" with your ACL id
 
-	!!! info "What ARN?"
-		If you don't have the ARN, you can go back to Inspector and copy the ARN from the Medium finding.
+	![](./images/mod4-lambda-replace.png)
 
-12.	Paste the ARN into the appropriate place in the following text: {replace the "**INSERT ARN HERE**" with your arn)
+13.	Click on _Save_. We are now ready to test the automatic remediation of port 22 internet exposed findings! 
 
-	``` 
-	{"template":"arn:aws:inspector:us-east-1:123456789012:target/0-a12b3c4d/template/0-5e6f7g8h","run":"arn:aws:inspector:us-east-1:123456789012:target/0-a12b3c4d/template/0-5e6f7g8h/run/0-9i0j1k2l","time":"2019-04-09T00:00:01.401Z","finding":"INSERT ARN HERE","event":"FINDING_REPORTED","target":"arn:aws:inspector:us-east-1:123456789012:target/0-a12b3c4d"}
-	```
+14. Click the button _Test_. You should now see a green box with _Execution result: succeeded_. If you're curious you can expand _details_ to read the log output.
 
-13.	Paste the SNS message from above in the "Message body to send to the endpoint" text box
+	![](./images/mod4-success.png)
 
-14.	Leave all the other fields empty
-
-	![](./images/mod4-5-message.png)
-
-15.	Click "Publish Message"
-
-	!!! info "If you're bored"
+	!!! info "Optional"
 		<p style="font-size:16px;">
-		Alternatively if you have the time, you can re-run the Inspector report and watch once it's complete to see if the change was made.
+		If you have the time, you can use Reachability Analyzer to analyze connectivity from the Internet Gateway to the instance on port 22.
 		</p>
 
 	To confirm that it worked you will check the Network ACL's.
 
-16.	Click on Services on the top right and click on VPC
+16.	Copy the acl id from the Log output (or from the test event that you configured). Click on Services on the top right and click on [VPC, then Network ACLs](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1#acls:).
 
-17.	On the left hand navigation click on Network ACLs
+17.	Filter the network ACLs by the id you just copied. Then click on _Inbound rules_.
 
-	![](./images/mod4-6-vpc-nacls.png)
+	![](./images/mod4-nacls-changed.png)
 
-18.	Since the Proof of Concept VPC is the one with the misconfiguration, click on the ACL associated with that VPC
-
-	![](./images/mod4-7-nacls.png)
-
-19.	On the bottom navigation, click on "Inbound Rules"
-
-	![](./images/mod4-8-nacl-rules.png)
-
-	Do you see a rule blocking SSH?
+	Do you see a rule blocking SSH? This was just created by our Lambda function.
 
 	But if SSH is completely blocked to the instance, how can legitimate administrators configure the machine? Well, they can modify the Security Group and then the NACL through their Change Process. But if they want to make sure the instance wasn't compromised there's another option.
 
-20.	Click on Services on the top right and click on Systems Manager
+20.	Click on Services on the top right and click on [Systems Manager, then on Sessions Manager](https://eu-west-1.console.aws.amazon.com/systems-manager/session-manager?region=eu-west-1)
 
-21.	On the left hand navigation, click on Session Manager
-
-	![](./images/mod4-9-systems-manager.png)
-
-22.	On the right hand side click on Start Session
-
-	![](./images/mod4-10-session-manager.png)
-
-	Do you remember the instance ID with the misconfigured Security Group? If not, don't worry, it was the PoC Web Server for AZ2
+21.	Do you remember the instance ID with the misconfigured Security Group? If not, don't worry, it was the PoC Web Server for AZ2
 
 23.	Click on the radio button next to the instance
 
 24.	Click Start Session
 
-	![](./images/mod4-11-session-instances.png)
+	![](./images/mod4-session-instances.png)
 
 25.	Type "ping 8.8.8.8" - Are you able to ping out to the world? Hit Cntl-C when you're ready to move on.
 
@@ -215,6 +190,11 @@ In order to implement automatic remediation for specific findings we need a trig
 27.	When you're done, hit "Terminate" in the top right corner
 
 28.	Confirm you want to terminate the session.
+
+!!! info "Challenge"
+		<p style="font-size:16px;">
+		If you have the time and want to have another challenge, try to fix the findings for port 3306 open to the internet. This time fix them manually. You can start with the finding in Inspector, then utilize Reachability Analyzer to find out where traffic is allowed and fix these issues. Finally rerun the reachability analysis do check, if connection from the Internet Gateway to port 3306 in the instances is still allowed.
+		</p>
 
 So now we've learned how you can use Inspector to kick off a Lambda function and automatically remediate potentially risks configurations. Additionally, you've seen how when you isolate instances from the world, you can still use AWS services to securely access them and perform troubleshooting or incidence response.
 
