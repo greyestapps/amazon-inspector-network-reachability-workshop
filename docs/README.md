@@ -56,7 +56,7 @@ The CloudFormation template will build the following elements of the workshop in
 
 This environment is shown below.
 
-![](./images/readme-1-architecture.png)
+![](./images/readme-architecture.png)
 
 Here are the Route Tables and Security Groups for you to review as well. Don't worry, we will also cover this with a short presentation in a bit.
 

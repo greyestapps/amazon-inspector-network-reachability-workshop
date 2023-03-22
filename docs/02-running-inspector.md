@@ -18,7 +18,7 @@ Running Inspector
 
 	![](./images/mod2-2-cloudformation-outputs.png)
 
-4.  Copy the DNS names from the Output frame into a text editor window. You can use these to validate the Web servers that should be publically accessible are.
+4.  Open the DNS names from the Output frame into a new browser tab. You can use these to validate the Web servers that should be publically accessible are.
 
     1.  The LoadBalancerFullDNS and PoCWebServer1PublicDNS should work.
 

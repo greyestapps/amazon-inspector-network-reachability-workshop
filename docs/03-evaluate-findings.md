@@ -33,7 +33,7 @@ Let's look at the Inspector Network Reachability findings and see what we can le
 
 	![](./images/mod3-medium-finding.png)
 
-	Our instance is reachable via SSH from the Internet. First, let's find out which instance that is. Click on the link for the Resource ID under _Resource affected_. Looking at the name this is our Web Server in AZ2. We should not expose this via port 22 to the Internet. 
+	Our instance is reachable via SSH from the Internet. First, let's find out which instance that is. Click on the link for the Resource ID under _Resource affected_. Looking at the name this is our PoC Web Server in AZ2. We should not expose this via port 22 to the Internet. 
 	
 4.  How to remediate? Inspector tells us at the bottom under _Remediation_ that we can restrict the access to our instance via the Security Group or Access Control List.
 
@@ -43,15 +43,15 @@ Let's look at the Inspector Network Reachability findings and see what we can le
 
 	So since you know some things are wrong, let’s check the other findings for this server. You do that by filtering by the instance ID.
 
-5.  In the Findings view add another filter for _Resource ID_ that equals your instance id (you can copy the instance id from the first finding).
+5.  Go back to Inspector and in the Findings view add another filter for _Resource ID_ that equals your instance id (you can copy the instance id from the first finding).
 	![](./images/mod3-finding443.png)
-	There's another finding for our WebServer instance indicating that port 443 is exposed to the internet. Given we are serving a website this is only a low severity. We could put the WebServers into private subnets and only expose the LoadBalancer into the public subnet, but let's first focus on understanding the other findings as well.
+	There's another finding for our WebServer instance indicating that port 443 is exposed to the internet. Given we are serving a website and this is a HTTPS port the severity is low. We could put the WebServers into private subnets and only expose the LoadBalancer into the public subnet, but let's focus on understanding the other findings as well.
 
 6.  Going back to the Medium finding with port 22 being exposed to the internet let us check if other instances are affected by this as well. In the Findings view remove the filter for the instance id. Add a new filter for _Open port_ from _22_ to _22_.
 
 	As we can see luckily only our WebServer for AZ2 is affected.
 
-7.  Let's have a look at the other _Medium_ findings. As we can see there are 2 instances with port 3306 reachable from the internet. Click on one of these findings and follow the link to the affected resource. As it turns out this is one of our database servers. Looking at the second finding with port 3306 being reachable from the internet shows that actually both our database servers are impacted by this. This is for sure a security concern, databases should reside in private subnets and not being accessible from the internet. So _Assumption 1. Instances in private subnets are not accessible from the internet_ is broken as well. If the subnet would have been setup correctly (meaning no route to an Internet Gateway in the respective RouteTable) the assumption would have been correct.
+7.  Remove the filter for the _Resource ID_ and let's have a look at the other _Medium_ findings. As we can see there are 2 instances with port 3306 reachable from the internet. Click on one of these findings and follow the link to the affected resource. As it turns out this is one of our database servers. Looking at the second finding with port 3306 being reachable from the internet shows that actually both our database servers are impacted by this. This is for sure a security concern, databases should reside in private subnets and not being accessible from the internet. So _Assumption 1. Instances in private subnets are not accessible from the internet_ is broken as well. If the subnet would have been setup correctly (meaning no route to an Internet Gateway in the respective RouteTable) the assumption would have been correct.
 
 8. As we looked at all the Medium findings let us now investigate the others with low severity. You can add another filter for severity low.
 	![](./images/mod3-low.png)

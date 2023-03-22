@@ -148,7 +148,9 @@ In order to implement automatic remediation for specific findings we need a trig
 
 13.	Click on _Save_. We are now ready to test the automatic remediation of port 22 internet exposed findings! 
 
-14. Click the button _Test_. You should now see a green box with _Execution result: succeeded_. If you're curious you can expand _details_ to read the log output.
+14. Go to [VPC Network ACLs](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1#acls:) and click on the ACL which ID you just inserted into the test event. Click on inbound rules to the current rules. ![](./images/mod4-nacl-before.png)
+
+15. Go back to the Lambda console and click the button _Test_. You should now see a green box with _Execution result: succeeded_. If you're curious you can expand _details_ to read the log output.
 
 	![](./images/mod4-success.png)
 
@@ -193,8 +195,13 @@ In order to implement automatic remediation for specific findings we need a trig
 
 !!! info "Challenge"
 		<p style="font-size:16px;">
-		If you have the time and want to have another challenge, try to fix the findings for port 3306 open to the internet. This time fix them manually. You can start with the finding in Inspector, then utilize Reachability Analyzer to find out where traffic is allowed and fix these issues. Finally rerun the reachability analysis do check, if connection from the Internet Gateway to port 3306 in the instances is still allowed.
+		If you have the time and want to have another challenge, try to fix the findings for port 3306 open to the internet. This time fix them manually. You can start with the finding in Inspector, then utilize Reachability Analyzer to find out where traffic is allowed and fix these issues. Finally rerun the reachability analysis to check, if connection from the Internet Gateway to port 3306 on the instances is still allowed.
 		</p>
+    <p style="font-size:16px;">
+    If you made the above work and still have time, try to remediate:<ul>
+    <li>make all WebServers listen on the same port</li>
+    <li>Enable Bastion hosts to connect to the PoC WebServers via port 22</li></ul>
+    </p>
 
 So now we've learned how you can use Inspector to kick off a Lambda function and automatically remediate potentially risks configurations. Additionally, you've seen how when you isolate instances from the world, you can still use AWS services to securely access them and perform troubleshooting or incidence response.
 
