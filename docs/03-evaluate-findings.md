@@ -37,7 +37,7 @@ Let's look at the Inspector Network Reachability findings and see what we can le
 	
 4.  How to remediate? Inspector tells us at the bottom under _Remediation_ that we can restrict the access to our instance via the Security Group or Access Control List.
 
-	In the _Open Network Paths_ section click on _Security Group_ and copy the Security Group ID. Next switch to [Security Groups](https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#SecurityGroups:) and enter the id in the search bar.
+	In the _Open Network Paths_ section click on _Security Group_ and copy the Security Group ID or simply click the blue link. Next switch to [Security Groups](https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#SecurityGroups:) and enter the id in the search bar.
 	![](./images/mod3-sg.png)
 	Click on the _Inbound rules_ which reveals that port 22 for SSH is open to the world. That means _Assumption 3. Access to the servers is limited according to the principle of least privilege_ is wrong. This is something you would want addressed first.
 
@@ -51,7 +51,7 @@ Let's look at the Inspector Network Reachability findings and see what we can le
 
 	As we can see luckily only our WebServer for AZ2 is affected.
 
-7.  Remove the filter for the _Resource ID_ and let's have a look at the other _Medium_ findings. As we can see there are 2 instances with port 3306 reachable from the internet. Click on one of these findings and follow the link to the affected resource. As it turns out this is one of our database servers. Looking at the second finding with port 3306 being reachable from the internet shows that actually both our database servers are impacted by this. This is for sure a security concern, databases should reside in private subnets and not being accessible from the internet. So _Assumption 1. Instances in private subnets are not accessible from the internet_ is broken as well. If the subnet would have been setup correctly (meaning no route to an Internet Gateway in the respective RouteTable) the assumption would have been correct.
+7.  Remove the filter for the _Open port_ and let's have a look at the other _Medium_ findings. As we can see there are 2 instances with port 3306 reachable from the internet. Click on one of these findings and follow the link to the affected resource. As it turns out this is one of our database servers. Looking at the second finding with port 3306 being reachable from the internet shows that actually both our database servers are impacted by this. This is for sure a security concern, databases should reside in private subnets and not being accessible from the internet. So _Assumption 1. Instances in private subnets are not accessible from the internet_ is broken as well. If the subnet would have been setup correctly (meaning no route to an Internet Gateway in the respective RouteTable) the assumption would have been correct.
 
 8. As we looked at all the Medium findings let us now investigate the others with low severity. You can add another filter for severity low.
 	![](./images/mod3-low.png)
@@ -69,7 +69,7 @@ Let's look at the Inspector Network Reachability findings and see what we can le
 
 14. You should get a success for reachability, meaning both instances can connect. Repeat step 13, this time with _Source type_ of _Bastion Server for AZ1_ and destination as _PoC Web Server for AZ1_
 
-15. This team Reachability Analyzer tells us that _PoC Web Server for AZ1_ is not reachable from _Bastion Server for AZ1_. ![](./images/mod3-reach.png) We could even look into the path details to find out the root cause of that connectivity failing. However, at this point let us conclude that _Assumption 4. The bastion hosts can access all environments_ is proven wrong as well.
+15. This time Reachability Analyzer tells us that _PoC Web Server for AZ1_ is not reachable from _Bastion Server for AZ1_. ![](./images/mod3-reach.png) We could even look into the path details to find out the root cause of that connectivity failing. However, at this point let us conclude that _Assumption 4. The bastion hosts can access all environments_ is proven wrong as well.
 
 <!-- 4.  Highlight the AWS agent ID, copy it, and scroll back to the top to paste the Instance ID of the offending instance in the “Filter”
 
